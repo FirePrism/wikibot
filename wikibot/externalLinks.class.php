@@ -120,7 +120,8 @@ class ExternalLinks {
 		$output = "";
 		foreach ($links as $link) {
 			$code = self::getHttpCode($link);
-			if ($code >= 400 && $code <= 599) {
+			// Check if it's broken (400 and 500 errors) ignore 503 (service unavailable)
+			if ($code >= 400 && $code <= 599 && $code != 503) {
 				$output .= "** ".$link." (Error ".$code.": ".self::getCodeMessage($code).")\n";
 			}
 		}
